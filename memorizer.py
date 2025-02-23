@@ -15,14 +15,29 @@ def delete_item():
     if index:
         listbox.delete(index)
 
+def save_file():
+    fout = asksaveasfile(defaultextension = ".txt")
+    if fout is not None:
+        for item in listbox.get(0,END):
+            print(item.strip(),file = fout)
+        listbox.delete(0,END)
 
-save_btn = Button(root,text = "Save",width = 15)
+def open_file():
+    fin = askopenfile(title = "open file")
+    if fin is not None:
+        listbox.delete(0,END)
+        items = fin.readlines()
+        for item in items:
+            listbox.insert(END,item.strip())
+
+
+save_btn = Button(root,text = "Save",width = 15,command = save_file)
 save_btn.pack(padx = 5,pady = 5)
 task = Entry(root,width = 35)
 task.pack(padx = 5,pady = 5)
 add_btn = Button(root,text = "Add",width = 15,command = add_item)
 add_btn.pack(padx = 5,pady = 5)
-open_btn = Button(root,text = "Open",width = 15)
+open_btn = Button(root,text = "Open",width = 15,command = open_file)
 open_btn.pack(side = LEFT,padx = 5,pady = 5)
 delete_btn = Button(root,text = "Delete",width = 15,command = delete_item)
 delete_btn.pack(side = RIGHT,padx = 5,pady = 5)
